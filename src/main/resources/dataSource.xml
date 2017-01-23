@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+     
+	<bean id="live_datasource" parent="parentDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="url">
+			<value></value>
+		</property>
+		<property name="username">
+			<value>${live.username}</value>
+		</property>
+		<property name="password">
+			<value>${live.password}</value>
+		</property>
+	</bean>
+	<bean id="parentDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName">
+			<value>${live.driverClassName}</value>
+		</property>
+		<property name="initialSize">
+			<value>${live.initialSize}</value>
+		</property>
+		<property name="maxIdle">
+			<value>${live.maxIdle}</value>
+		</property>
+		<property name="minIdle">
+			<value>${live.minIdle}</value>
+		</property>
+		<property name="maxActive">
+			<value>${live.maxActive}</value>
+		</property>
+		<property name="removeAbandoned">
+			<value>${live.removeAbandoned}</value>
+		</property>
+		<property name="removeAbandonedTimeout">
+			<value>${live.removeAbandonedTimeout}</value>
+		</property>
+		<property name="maxWait">
+			<value>${live.maxWait}</value>
+		</property>
+		<property name="testWhileIdle">
+			<value>${live.testWhileIdle}</value>
+		</property>
+		<property name="testOnReturn">
+			<value>${live.testOnReturn}</value>
+		</property>
+		<property name="testOnBorrow">
+			<value>${live.testOnBorrow}</value>
+		</property>
+		<property name="validationQuery">
+			<value>${live.validationQuery}</value>
+		</property>
+		<property name="timeBetweenEvictionRunsMillis">
+			<value>${live.timeBetweenEvictionRunsMillis}</value>
+		</property>
+		<property name="numTestsPerEvictionRun">
+			<value>${live.numTestsPerEvictionRun}</value>
+		</property>
+	</bean>
+</beans>
