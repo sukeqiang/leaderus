@@ -17,7 +17,6 @@ public class MyBeanPostProcessor implements BeanPostProcessor {
 	public MyBeanPostProcessor() {
 		logger.info("init:MyBeanPostProcessor!");
 	}
-	
 
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		Field[] fields = bean.getClass().getDeclaredFields();
