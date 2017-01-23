@@ -31,39 +31,6 @@ import fourthLessons.mockTest.pojo.TCourse;
 @Configuration
 public class TestUserServiceConfig {
 	
-	private final org.slf4j.Logger logger = LoggerFactory.getLogger(TestUserServiceConfig.class);
-	
-	boolean started = false ;
-    Iterator<Map<String,Object>> iterator ; 
-    Map<String,Object> currentMap ;
-    
-    List<Map<String,Object>> datas = new ArrayList<>();
-    {
-        Map<String,Object> row1 = new HashMap<String, Object>();
-        row1.put("id", 1);
-        row1.put("name", "gary1");
-        row1.put("mark", 90 );
-        datas.add(row1) ;
-
-        Map<String,Object> row2 = new HashMap<String, Object>();
-        row2.put("id", 2);
-        row2.put("name", "gary");
-        row2.put("mark", 80 );
-        datas.add(row2) ;
-    }
-    
-    public class TCourseMapper implements RowMapper<TCourse>{
-
-    	@Override
-    	public TCourse mapRow(ResultSet rs, int rowNum) throws SQLException {
-    		TCourse tCourse = new TCourse();
-    		tCourse.setId(rs.getInt("id"));
-    		tCourse.setName(rs.getString("name"));
-    		tCourse.setMark(rs.getString("mark"));
-    		return tCourse;
-    	}
-    }
-	
 	@Bean(value="live_datasource")
 	public DataSource dataSource() {
 		DataSource dataSource = Mockito.mock(DataSource.class);
@@ -72,7 +39,6 @@ public class TestUserServiceConfig {
         ResultSet rs = Mockito.mock(ResultSet.class);
         try {
         	Mockito.when(dataSource.getConnection()).then(t -> {
-        		logger.info("get connection!");
         		return conn;
         	});
         	Mockito.when(dataSource.getConnection()).thenReturn(conn); 
@@ -96,12 +62,33 @@ public class TestUserServiceConfig {
             
             Mockito.doAnswer(t->{
                 Object[] params = t.getArguments();
-                return currentMap.get( params[0] ) ; 
-            }).when(rs).getObject(Mockito.anyString()) ;
+                return currentMap.get( params[0] ); 
+            }).when(rs).getObject(Mockito.anyString());
             
 		} catch (Exception e) {
 			e.printStackTrace();
 		}  
 		return dataSource;
 	}
+	
+	private final org.slf4j.Logger logger = LoggerFactory.getLogger(TestUserServiceConfig.class);
+	
+	boolean started = false ;
+    Iterator<Map<String,Object>> iterator ; 
+    Map<String,Object> currentMap ;
+    
+    List<Map<String,Object>> datas = new ArrayList<>();
+    {
+        Map<String,Object> row1 = new HashMap<String, Object>();
+        row1.put("id", 1);
+        row1.put("name", "gary1");
+        row1.put("mark", 90 );
+        datas.add(row1) ;
+
+        Map<String,Object> row2 = new HashMap<String, Object>();
+        row2.put("id", 2);
+        row2.put("name", "gary");
+        row2.put("mark", 80 );
+        datas.add(row2) ;
+    }
 }

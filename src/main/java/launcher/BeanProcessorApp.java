@@ -13,19 +13,16 @@ public class BeanProcessorApp {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BeanProcessorApp.class);
 
-	public static void main(String[] args) {
-		System.setProperty("spring.profiles.active", "liveConf");
-		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext("fourthLessons");
+	public static void main(String[] args) throws Exception{
+		System.setProperty("spring.profiles.active", "testConf");
+		AnnotationConfigApplicationContext ctx = 
+				new AnnotationConfigApplicationContext("fourthLessons");
 		MyCoureseService service = ctx.getBean(MyCoureseService.class);
-		try {
-			List<TCourse> list = service.getAllCourse();
-			logger.info("course mark:");
-			for(TCourse course : list) {
-				logger.info(course.toString());
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		List<TCourse> list = service.getAllCourse();
+		
+		logger.info("course mark:");
+		for(TCourse course : list) {
+			logger.info(course.toString());
 		}
 		ctx.close();
 	}
