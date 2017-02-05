@@ -1,7 +1,7 @@
 package trans.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
 import userservice.bean.User;
@@ -9,7 +9,7 @@ import userservice.bean.User;
 @Component
 public class OperService {
 
-	private final Logger logger = LoggerFactory.getLogger(OperService.class);
+	protected static transient Log logger = LogFactory.getLog(OperService.class);
 	
 	public void saveUser(User user) {
 		logger.info("save user:" + user.getUserName());

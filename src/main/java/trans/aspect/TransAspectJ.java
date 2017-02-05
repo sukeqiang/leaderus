@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -12,17 +14,16 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import trans.service.QueryService;
 import trans.support.DataSourceTransactionManager;
 
 @Component
 @Aspect
 public class TransAspectJ {
 
-	private static final Logger logger = LoggerFactory.getLogger(TransAspectJ.class);
+	protected static transient Log logger = LogFactory.getLog(TransAspectJ.class);
 		
 	public TransAspectJ(){
 		logger.info("init TransAspectJ class");
