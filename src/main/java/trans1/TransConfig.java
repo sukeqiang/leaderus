@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ImportResource("classpath:dataSource.xml")
 @ComponentScan("trans1")
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 public class TransConfig {
 	@Bean
 	public PlatformTransactionManager getTransactionManager(DataSource live_datasource) {

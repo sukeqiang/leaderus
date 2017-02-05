@@ -18,7 +18,8 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import trans.test.CustomTransException;
 
 @Component
-public class MyLessionService implements IService {
+@Transactional
+public class MyLessionService {
 
 	protected transient Log logger = LogFactory.getLog(getClass());
 	
