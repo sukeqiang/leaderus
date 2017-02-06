@@ -43,24 +43,24 @@ public class MyLessionService {
 		}
 	}
 	
-//	public void queryLession(String name) throws SQLException {
-//		Connection con = DataSourceUtils.getConnection(dataSource);
-//		try {
-//			String sql = "";
-//			if(name == null || name.equals("")) {
-//				sql = "select name,price from lession";
-//			}else {
-//				sql = "select name,price from lession where name = '" + name + "'";
-//				
-//			}
-//			PreparedStatement ps = con.prepareStatement(sql);
-//			ResultSet rs = ps.executeQuery();
-//			while(rs.next()) {
-//				logger.info("course:" + rs.getString(1) + "  price:" + rs.getString(2));
-//			}
-//			ps.close();
-//		}finally {
-//			DataSourceUtils.releaseConnection(con, dataSource);
-//		}
-//	}
+	public void queryLession(String name) throws SQLException {
+		Connection con = DataSourceUtils.getConnection(dataSource);
+		try {
+			String sql = "";
+			if(name == null || name.equals("")) {
+				sql = "select name,price from lession";
+			}else {
+				sql = "select name,price from lession where name = '" + name + "'";
+				
+			}
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				logger.info("course:" + rs.getString(1) + "  price:" + rs.getString(2));
+			}
+			ps.close();
+		}finally {
+			DataSourceUtils.releaseConnection(con, dataSource);
+		}
+	}
 }

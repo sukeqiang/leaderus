@@ -1,24 +1,22 @@
-package trans.conf;
+package trans2.conf;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
-@Profile(value = "liveConf")
-@ImportResource("classpath:dataSource.xml")
 @Configuration
+@ComponentScan(basePackages = "trans2")
+@ImportResource("classpath:dataSource.xml")
 @EnableAspectJAutoProxy(proxyTargetClass=true,exposeProxy=true)
-@Configurable
-public class LiveUserServiceConfig {
-	
-	@Bean
+public class TransConfig {
+
+	@Bean(name = "dstm")
 	public PlatformTransactionManager getTransactionManager(DataSource live_datasource) {
 		DataSourceTransactionManager tx = new DataSourceTransactionManager();
 		tx.setDataSource(live_datasource);

@@ -1,4 +1,4 @@
-package trans.service;
+package trans2.service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -17,14 +18,14 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import trans.test.CustomTransException;
 
 @Component
-public class MyLessionService {
+public class LessionService {
 
 	protected transient Log logger = LogFactory.getLog(getClass());
 	
 	@Resource(name = "live_datasource")
 	private DataSource dataSource;
 	
-	public void addLession(String name, String price){
+	public void saveService(String name, String price){
 		Connection con = DataSourceUtils.getConnection(dataSource);
 		PreparedStatement ps = null;
 		try{
@@ -33,32 +34,32 @@ public class MyLessionService {
 			ps.setString(1, name);
 			ps.setString(2, price);
 			ps.executeUpdate();
-			ps.close();
 		} catch(Exception e) {
 			e.printStackTrace();
-		} finally {
-			DataSourceUtils.releaseConnection(con, dataSource);
 		}
+		LessionService s = (LessionService)AopContext.currentProxy();
+		s.queryService("alice");
 	}
 	
-	public void queryLession(String name) throws SQLException {
+	public void queryService(String name) {
 		Connection con = DataSourceUtils.getConnection(dataSource);
+		String sql = "";
+		if(name == null || name.equals("")) {
+			sql = "select name,price from lession";
+		}else {
+			sql = "select name,price from lession where name = '" + name + "'";
+			
+		}
+		PreparedStatement ps;
 		try {
-			String sql = "";
-			if(name == null || name.equals("")) {
-				sql = "select name,price from lession";
-			}else {
-				sql = "select name,price from lession where name = '" + name + "'";
-				
-			}
-			PreparedStatement ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				logger.info("course:" + rs.getString(1) + "  price:" + rs.getString(2));
 			}
-			ps.close();
-		}finally {
-			DataSourceUtils.releaseConnection(con, dataSource);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
