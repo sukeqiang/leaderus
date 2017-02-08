@@ -62,4 +62,8 @@ public class LessionService {
 			e.printStackTrace();
 		}
 	}
+	
+	public void printAddBean() {
+		System.out.println("ok!");
+	}
 }
