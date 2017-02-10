@@ -20,8 +20,7 @@ public class NewMyLessionService {
 	private JdbcTemplate jdbcTemplate;
 	
 	@Transactional(rollbackFor = CustomTransException.class,propagation = Propagation.NESTED)
-	public void addLession(String name, String price)throws CustomTransException{
+	public void addLession(String name, String price){
 		jdbcTemplate.execute("insert into lession(name,price) values ('" + name + "','" + price + "')");
-		throw new CustomTransException("aaaaaa");
 	}
 }

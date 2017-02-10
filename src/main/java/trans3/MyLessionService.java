@@ -25,11 +25,6 @@ public class MyLessionService {
 	@Transactional(rollbackFor = CustomTransException.class,propagation = Propagation.REQUIRED)
 	public void addLession(String name, String price){
 		jdbcTemplate.execute("insert into lession(name,price) values ('" + name + "','" + price + "')");
-		try {
-			newMyLessionService.addLession("mick1", "16.12");
-		} catch (CustomTransException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		newMyLessionService.addLession("mick1", "16.12");
 	}
 }
