@@ -17,27 +17,25 @@ public class Trans1 {
 
 	public static void main(String[] args){
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(TransConfig.class);
-//		PlatformTransactionManager tx = ctx.getBean(PlatformTransactionManager.class);
-//		ThreadLocalUtil.dumphreadLocals();
-//		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-//		def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
-//		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-//		def.setTimeout(300);
-//		ThreadLocalUtil.dumphreadLocals();
+		PlatformTransactionManager tx = ctx.getBean(PlatformTransactionManager.class);
+		ThreadLocalUtil.dumphreadLocals();
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		def.setTimeout(300);
+		ThreadLocalUtil.dumphreadLocals();
 		MyLessionService service = ctx.getBean(MyLessionService.class);
 		service.addLession("mick", "13.00");
-//		 TransactionStatus status = tx.getTransaction(def);
-//		 ThreadLocalUtil.dumphreadLocals();
-//		 try {
-//			service.addLession("mick", "13.00");
-//		} catch (CustomTransException e) {
-//			e.printStackTrace();
-//			status.setRollbackOnly();
-//		}
-//		 tx.commit(status);
-//		 ThreadLocalUtil.dumphreadLocals();
-//		 service.queryLession("mick");
-//		 ThreadLocalUtil.dumphreadLocals();
+		 TransactionStatus status = tx.getTransaction(def);
+		 service.addLession("mick", "13.00");
+		 tx.commit(status);
+		 try {
+			service.queryLession("mick");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 ThreadLocalUtil.dumphreadLocals();
 //		 status.setRollbackOnly();
 		 
 //		 ThreadLocalUtil.dumphreadLocals();
