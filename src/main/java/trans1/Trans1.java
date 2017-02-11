@@ -11,7 +11,7 @@ public class Trans1 {
 
 	public static void main(String[] args) throws Exception {
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(TransConfig.class);
-		MyLessionService service = ctx.getBean(MyLessionService.class);
+		IService service = (IService)ctx.getBean("MyLessionService");
 		service.addLession("mick", "13.00");
 		// ThreadLocalUtil.dumphreadLocals();
 		// service.queryLession("mick");

@@ -23,13 +23,13 @@ public class Trans2 {
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		def.setTimeout(300);
 		TransactionStatus status1 = tx.getTransaction(def);
-		service.addLession("mick", "13.00");
+		service.addLession("mick1", "13.00");
 		
 		def = new DefaultTransactionDefinition();
 		def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		TransactionStatus status2 = tx.getTransaction(def);
-		service.queryLession("mick");
+		service.queryLession("mick1");
 		tx.commit(status2);
 		tx.commit(status1);
 		ctx.close();
