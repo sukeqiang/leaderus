@@ -1,23 +1,19 @@
-package mybatis;
+package trans5;
 
 import javax.sql.DataSource;
 
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan(basePackages = "mybatis")
+@ComponentScan(basePackages = "trans5")
 @ImportResource("classpath:dataSource.xml")
-@MapperScan("mybatis.mapping")
 @EnableTransactionManagement
 public class TransConfig {
 
@@ -28,16 +24,8 @@ public class TransConfig {
 		return tx;
 	}
 	
-	@Bean
-	public SqlSessionFactoryBean getSqlSessionFactoryBean(DataSource live_datasource) {
-		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-		sqlSessionFactoryBean.setDataSource(live_datasource);
-		return sqlSessionFactoryBean;
-	}
-	
-	@Bean(name = "sqlSessionTemplate")
-	public SqlSessionTemplate getSqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
-		SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
-		return sqlSessionTemplate;
+	@Bean("jdbcTemplate")
+	public JdbcTemplate getJdbcTemplate(DataSource live_datasource) {
+		return new JdbcTemplate(live_datasource);
 	}
 }
