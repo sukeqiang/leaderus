@@ -35,18 +35,6 @@ public class TransConfig {
 	private DataSource live_datasource;
 	
 	@Bean
-	public PlatformTransactionManager getTransactionManager() {
-		DataSourceTransactionManager tx = new DataSourceTransactionManager();
-		tx.setDataSource(live_datasource);
-		return tx;
-	}
-	
-	@Bean("jdbcTemplate")
-	public JdbcTemplate getJdbcTemplate(DataSource live_datasource) {
-		return new JdbcTemplate(live_datasource);
-	}
-	
-	@Bean
 	public AspectJExpressionPointcutAdvisor transactionAdvisor() {
 	    AspectJExpressionPointcutAdvisor advisor = new AspectJExpressionPointcutAdvisor();
 	    advisor.setAdvice(transactionInterceptor());
@@ -74,5 +62,17 @@ public class TransConfig {
 	    txMaps.put("add*", requredTx);
 	    tas.setNameMap(txMaps);
 	    return tas;
+	}
+	
+	@Bean
+	public PlatformTransactionManager getTransactionManager() {
+		DataSourceTransactionManager tx = new DataSourceTransactionManager();
+		tx.setDataSource(live_datasource);
+		return tx;
+	}
+	
+	@Bean("jdbcTemplate")
+	public JdbcTemplate getJdbcTemplate(DataSource live_datasource) {
+		return new JdbcTemplate(live_datasource);
 	}
 }
