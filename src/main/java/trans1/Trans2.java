@@ -15,7 +15,7 @@ public class Trans2 {
 
 	public static void main(String[] args) throws Exception {
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(TransConfig.class);
-		MyLessionService service = ctx.getBean(MyLessionService.class);
+		IService service = (IService)ctx.getBean("MyLessionService");
 		
 		PlatformTransactionManager tx = ctx.getBean(PlatformTransactionManager.class);
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
