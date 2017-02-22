@@ -12,7 +12,6 @@ import mybatis.domain.LdHomeWorkFB;
 import mybatis.domain.TBUser;
 import mybatis.service.UserService;
 
-@Transactional
 @Component
 public class TestUserService {
 
@@ -32,8 +31,8 @@ public class TestUserService {
 		return userSrv.selectLdhomeworkByClassIdLessionId(classId,lessionId,orderBy,sortOrder);
 	}
 	
-	public void getCommentHomeWork(LdHomeWorkFB comment, Integer homeworkId, int negativeStarFlag) {
-		userSrv.getCommentHomeWork(comment, homeworkId, negativeStarFlag);
+	public void saveCommentHomeWork(LdHomeWorkFB comment, int negativeStarFlag) {
+		userSrv.saveCommentHomeWork(comment, negativeStarFlag);
 	}
 	
 	public List<LdHomeWorkFB> getAllComment(Integer homeworkId) {

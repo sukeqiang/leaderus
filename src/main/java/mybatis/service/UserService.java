@@ -1,11 +1,17 @@
 package mybatis.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.SqlSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import mybatis.domain.LdHomeWorkFB;
@@ -16,7 +22,6 @@ import mybatis.mapping.LdHomeWorkMapper;
 import mybatis.mapping.TBUserMapper;
 
 @Component
-@Transactional
 public class UserService {
 
 	@Autowired
@@ -48,13 +53,14 @@ public class UserService {
 		return ldHomeWorkMapper.selectLdhomeworkByClassIdLessionId(classId,lessionId,orderBy,sortOrder);
 	}
 	
-	public void getCommentHomeWork(LdHomeWorkFB comment, Integer homeworkId, int negativeStarFlag) {
+	@Transactional
+	public void saveCommentHomeWork(LdHomeWorkFB comment, int negativeStarFlag) {
 		char bestFlag = '0';
 		if(StringUtils.equalsIgnoreCase(comment.getLevelFlag(), "A")) {
 			bestFlag = '1';
 		}
 		ldHomeWorkFBMapper.insert(comment);
-		ldHomeWorkMapper.updateCommentByPrimaryKey(homeworkId, negativeStarFlag, bestFlag);
+		ldHomeWorkMapper.updateCommentByPrimaryKey(Integer.parseInt(comment.getHomeworkId().toString()), negativeStarFlag, bestFlag);
 	}
 	
 	public List<LdHomeWorkFB> getAllComment(Integer homeworkId) {

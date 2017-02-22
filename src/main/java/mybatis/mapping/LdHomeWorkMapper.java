@@ -189,14 +189,15 @@ public interface LdHomeWorkMapper {
     		@Param("orderBy") String orderBy,
     		@Param("sortOrder") String sortOrder);
     
-    @Update({
+    @Update({"<script>",
         "update ldhomework",
         "set correct_flag = 1,",
         "<if test=\"flag==0\"> negative_count = negative_count+1,</if>",  
         "<if test=\"flag==1\"> star_count = star_count+1,</if>",
         "<if test=\"flag==2\"></if>",
         "best_flag = #{bestFlag,jdbcType=CHAR}",
-        "where id = #{id,jdbcType=BIGINT}"
+        "where id = #{id,jdbcType=BIGINT}",
+        "</script>"
     })
     int updateCommentByPrimaryKey(@Param("id") Integer id, @Param("flag") int flag, @Param("bestFlag") char bestFlag);
 }
